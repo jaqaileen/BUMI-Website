@@ -30,9 +30,76 @@
 </head>
 
 <body>
+   <!-- loader -->
+
+   <style> 
+    .loader {
+        display: flex;
+    }
+</style>    
+
     <div class="loader">
         <img src="./assets/bumi logo symbol.svg" loading="lazy" alt="" class="image-8" />
     </div>
+<script>
+
+    $(document).on('keyup', function (event) {
+        if (event.which === 27) {
+            $('.hamburger-button-wrapper.close').click();
+            console.log("ESC clicked!");
+        }
+    });
+
+    $(document).ready(function () {
+
+        gsap.to(".loader", {
+            opacity: 0,
+            duration: 0.5,
+            onComplete: () => {
+                gsap.set(".loader", {
+                    display: "none",
+                });
+            }
+            ,
+        });
+
+        (function () {
+            window.onpageshow = function (event) {
+                if (event.persisted) {
+                    window.location.reload();
+                }
+            }
+                ;
+        }
+        )();
+
+        $("a").click(function (event) {
+
+            if ($(this).prop("hostname") === window.location.host && $(this).attr("href").indexOf("#") === -1 && $(this).attr("target") !== "_blank") {
+
+                event.preventDefault();
+                let destination = $(this).attr("href");
+
+                gsap.set(".loader", {
+                    display: "flex",
+                });
+                gsap.fromTo(".loader", {
+                    opacity: 0
+                }, {
+                    opacity: 1,
+                    duration: 0.25,
+                    onComplete: () => {
+                        window.location.href = destination;
+                    }
+                    ,
+                });
+
+            }
+
+        });
+    });
+</script>
+
     <div class="w-embed">
         <style>
             /* Fix for Inter arrows not rendering correctly! */
@@ -1129,7 +1196,7 @@
     <script src="https://cdn.prod.website-files.com/6570e8a05181277af39c19d5/js/webflow.f8ecad92d.js"
         type="text/javascript"></script>
     
-        
+
     <script type="text/javascript"
         src="https://cdn.prod.website-files.com/6570e8a05181277af39c19d5/657362db18210f0f70b0e763_gsap.txt"></script>
 
